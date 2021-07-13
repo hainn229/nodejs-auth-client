@@ -1,0 +1,130 @@
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: rgb(185, 185, 185);
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+
+@import "~antd/dist/antd.css";
+
+.layout {
+  min-height: 980px;
+  padding-left: 10%;
+  padding-right: 10%;
+}
+
+.site-layout-content {
+  min-height: 580px;
+  background: #fff;
+  padding: 16px;
+}
+
+.login-form-forgot {
+  float: right;
+}
+.ant-col-rtl .login-form-forgot {
+  float: left;
+}
+.login-form-button {
+  width: 100%;
+}
+
+.profileLeft {
+  border-radius: 5px;
+  background: #fff;
+}
+
+.profileRight {
+  border-radius: 5px;
+  background: #fff;
+  padding: 16px;
+  margin-left: 16px;
+}
+
+.textHeader {
+  font-size: 16px;
+  font-weight: bold;
+  width: 120px;
+}
+
+.textSecondary {
+  color: "gray";
+  padding-left: 20px;
+  font-size: 18px;
+}
+
+.btnEdit {
+  float: right;
+  text-align: right;
+}
+
+.profileDetails {
+  padding: 20px;
+}
+
+.steps-content {
+  min-height: 400px;
+  margin-top: 16px;
+  padding: 80px 100px;
+  text-align: center;
+  background-color: #fafafa;
+  border: 1px dashed #e9e9e9;
+  border-radius: 2px;
+  width: 100%;
+}
+
+.steps-action {
+  margin-top: 24px;
+}
+
+.tagsEdit {
+  font-size: 20px;
+  padding: 5px 10px;
+}
+
+.tagsVerified {
+  margin-left: 24px;
+}
+
+.extendLeft {
+  border-radius: 5px;
+  background: #fff;
+}
+
+.extendRight {
+  border-radius: 5px;
+  background: #fff;
+  margin-left: 16px;
+}
+
+.extendDetails {
+  padding: 20px;
+}
+
+.extendHeader {
+  font-size: 16px;
+  width: 100px;
+}
+
+.extendSecondary {
+  color: "gray";
+  padding-left: 20px;
+  font-size: 18px;
+  text-align: "right";
+}
+
+.skillTitle {
+  font-size: 16px;
+}
+
+.breadCrumb {
+  padding: 16px;
+}
