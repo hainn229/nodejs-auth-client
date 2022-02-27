@@ -1,9 +1,9 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
-import { useAuth } from "../../actions/index";
-import { postSignup } from "../../api/index";
-import { MailOutlined, LockOutlined, UserOutlined } from "@ant-design/icons";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { useAuth } from '../../actions/index';
+import { postSignup } from '../../api/index';
+import { MailOutlined, LockOutlined, UserOutlined } from '@ant-design/icons';
 import {
   Form,
   Input,
@@ -14,7 +14,7 @@ import {
   Col,
   message,
   Divider,
-} from "antd";
+} from 'antd';
 const { Content } = Layout;
 const { Title, Link } = Typography;
 
@@ -37,15 +37,15 @@ const SignupComponent = () => {
         };
         const request = await postSignup(data);
         if (request.status === 200) {
-          localStorage.setItem("token", request.data.token);
-          dispatch({ type: "FETCH_USER", payload: request.data.user });
+          localStorage.setItem('token', request.data.token);
+          dispatch({ type: 'FETCH_USER', payload: request.data.user });
           message.success(request.data.message);
           setTimeout(() => {
-            return (window.location.href = "/");
+            return (window.location.href = '/');
           }, 3000);
         }
       } else {
-        return message.error("Password Confirm did not match!");
+        return message.error('Password Confirm did not match!');
       }
     } catch (error) {
       if (error.response) {
@@ -57,89 +57,89 @@ const SignupComponent = () => {
   };
 
   return user ? (
-    <Redirect to={"/"} />
+    <Redirect to={'/'} />
   ) : (
-    <Layout className="layout">
-      <Content style={{ paddingTop: "14%", paddingBottom: "20%" }}>
-        <Row justify="center" align="middle">
+    <Layout className='layout'>
+      <Content style={{ paddingTop: '14%', paddingBottom: '20%' }}>
+        <Row justify='center' align='middle'>
           <Col span={8}>
-            <Title style={{ textAlign: "center", fontSize: 60 }}>Sign Up</Title>
+            <Title style={{ textAlign: 'center', fontSize: 60 }}>Sign Up</Title>
             <Form
-              name="normal_login"
-              className="login-form"
+              name='normal_login'
+              className='login-form'
               onFinish={onFinish}
             >
               <Form.Item
-                name="full_name"
+                name='full_name'
                 hasFeedback
                 rules={[
                   {
                     required: true,
-                    message: "Please input your full name!",
+                    message: 'Please input your full name!',
                   },
                 ]}
               >
                 <Input
                   allowClear
-                  prefix={<UserOutlined className="site-form-item-icon" />}
-                  placeholder="Full name"
+                  prefix={<UserOutlined className='site-form-item-icon' />}
+                  placeholder='Full name'
                 />
               </Form.Item>
 
               <Form.Item
-                name="email"
+                name='email'
                 hasFeedback
                 rules={[
                   {
-                    type: "email",
+                    type: 'email',
                     required: true,
-                    message: "Please input your email address!",
+                    message: 'Please input your email address!',
                   },
                 ]}
               >
                 <Input
                   allowClear
-                  prefix={<MailOutlined className="site-form-item-icon" />}
-                  placeholder="Email"
+                  prefix={<MailOutlined className='site-form-item-icon' />}
+                  placeholder='Email'
                 />
               </Form.Item>
 
               <Form.Item
-                name="password"
+                name='password'
                 hasFeedback
                 rules={[
                   {
                     min: 8,
                     required: true,
                     message:
-                      "Please input your password, at least 8 characters!",
+                      'Please input your password, at least 8 characters!',
                   },
                 ]}
               >
                 <Input.Password
                   allowClear
-                  prefix={<LockOutlined className="site-form-item-icon" />}
-                  placeholder="Password"
+                  prefix={<LockOutlined className='site-form-item-icon' />}
+                  placeholder='Password'
                 />
               </Form.Item>
 
               <Form.Item
-                name="c_password"
+                name='c_password'
                 hasFeedback
-                dependencies={["password"]}
+                dependencies={['password']}
                 rules={[
                   {
                     required: true,
-                    message: "Please input your confirm password!",
+                    message: 'Please input your confirm password!',
                   },
                   ({ getFieldValue }) => ({
                     validator(_, value) {
-                      if (!value || getFieldValue("password") === value) {
+                      if (!value || getFieldValue('password') === value) {
                         return Promise.resolve();
                       }
                       return Promise.reject(
                         new Error(
-                          "The two passwords that you entered do not match!"
+                          'The two passwords that you entered do not match!'
                         )
                       );
                     },
@@ -148,16 +148,16 @@ const SignupComponent = () => {
               >
                 <Input.Password
                   allowClear
-                  prefix={<LockOutlined className="site-form-item-icon" />}
-                  placeholder="Confirm Password"
+                  prefix={<LockOutlined className='site-form-item-icon' />}
+                  placeholder='Confirm Password'
                 />
               </Form.Item>
 
               <Form.Item>
                 <Button
-                  type="primary"
-                  htmlType="submit"
-                  className="login-form-button"
+                  type='primary'
+                  htmlType='submit'
+                  className='login-form-button'
                 >
                   Sign Up
                 </Button>
@@ -165,10 +165,10 @@ const SignupComponent = () => {
             </Form>
           </Col>
         </Row>
-        <Row justify="center" align="middle">
-          <Col span={8} style={{ textAlign: "center" }}>
+        <Row justify='center' align='middle'>
+          <Col span={8} style={{ textAlign: 'center' }}>
             <Divider />
-            <Link href="/login">Had an account? Log in now!</Link>
+            <Link href='/login'>Had an account? Log in now!</Link>
           </Col>
         </Row>
       </Content>

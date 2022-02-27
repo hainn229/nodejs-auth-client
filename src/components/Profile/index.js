@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Link, Redirect } from "react-router-dom";
+import React, { useState, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link, Redirect } from 'react-router-dom';
 
-import HeaderComponent from "../Header";
-import FooterComponent from "../Footer";
-import { putUser, uploadImage } from "../../api/index";
+import HeaderComponent from '../Header';
+import FooterComponent from '../Footer';
+import { putUser, uploadImage } from '../../api/index';
 
 import {
   Layout,
@@ -24,7 +24,7 @@ import {
   message,
   Progress,
   Menu,
-} from "antd";
+} from 'antd';
 import {
   EditOutlined,
   CheckOutlined,
@@ -39,7 +39,7 @@ import {
   EnvironmentOutlined,
   MenuOutlined,
   LockOutlined,
-} from "@ant-design/icons";
+} from '@ant-design/icons';
 
 const { Header, Content, Footer } = Layout;
 
@@ -67,37 +67,37 @@ const ProfileComponent = () => {
       if (user) {
         const request = await putUser(user._id, data);
         if (request.status === 200) {
-          notification["success"]({
+          notification['success']({
             message: request.data.message,
             description: data.full_name ? (
               <>
                 <p>You just changed your full name to</p>
-                <Tag color="green" className="tagsEdit">
+                <Tag color='green' className='tagsEdit'>
                   {data.full_name}
                 </Tag>
               </>
             ) : data.dob ? (
               <>
                 <p>You just changed your date of birth to</p>
-                <Tag color="green" className="tagsEdit">
+                <Tag color='green' className='tagsEdit'>
                   {new Date(data.dob).getFullYear() +
-                    " - " +
+                    ' - ' +
                     (new Date(data.dob).getMonth() + 1) +
-                    " - " +
+                    ' - ' +
                     new Date(data.dob).getDate()}
                 </Tag>
               </>
             ) : (
               <>
                 <p>You just changed the address information to</p>
-                <Tag color="green" className="tagsEdit">
+                <Tag color='green' className='tagsEdit'>
                   {data.address}
                 </Tag>
               </>
             ),
           });
           setTimeout(() => {
-            dispatch({ type: "FETCH_USER", payload: request.data });
+            dispatch({ type: 'FETCH_USER', payload: request.data });
             setStt({
               ...stt,
               formName: false,
@@ -110,13 +110,13 @@ const ProfileComponent = () => {
       }
     } catch (error) {
       if (error.response) {
-        return notification["error"]({
-          message: "Update Failed!",
+        return notification['error']({
+          message: 'Update Failed!',
           description: error.response.data.message,
         });
       } else {
-        return notification["error"]({
-          essage: "Update Failed!",
+        return notification['error']({
+          essage: 'Update Failed!',
           description: error.message,
         });
       }
@@ -153,7 +153,7 @@ const ProfileComponent = () => {
   const onFinishUpload = async () => {
     try {
       const formData = new FormData();
-      formData.append("image", stateUpload.fileList[0]);
+      formData.append('image', stateUpload.fileList[0]);
       setStateUpload({ ...stateUpload, uploading: true });
       if (stateUpload.fileList) {
         const request = await uploadImage(formData);
@@ -187,11 +187,11 @@ const ProfileComponent = () => {
     },
     beforeUpload: (file) => {
       const isJpgOrPng =
-        file.type === "image/jpeg" ||
-        file.type === "image/png" ||
-        file.type === "image/jpg";
+        file.type === 'image/jpeg' ||
+        file.type === 'image/png' ||
+        file.type === 'image/jpg';
       if (!isJpgOrPng) {
-        message.error("You can only upload JPG/JPEG/PNG file!");
+        message.error('You can only upload JPG/JPEG/PNG file!');
       } else {
         setStateUpload({ ...stateUpload, fileList: [file] });
         return false;
@@ -217,12 +217,12 @@ const ProfileComponent = () => {
             urlImage: null,
             btnDisabled: true,
           });
-          notification["success"]({
+          notification['success']({
             message: request.data.message,
-            description: "You just changed your image profile!",
+            description: 'You just changed your image profile!',
           });
           setTimeout(() => {
-            dispatch({ type: "FETCH_USER", payload: request.data });
+            dispatch({ type: 'FETCH_USER', payload: request.data });
             return window.location.reload();
           }, 3000);
         }
@@ -231,20 +231,20 @@ const ProfileComponent = () => {
           ...stateUpload,
           loading: false,
         });
-        return notification["error"]({
-          message: "Update error!",
-          description: "You need upload image first",
+        return notification['error']({
+          message: 'Update error!',
+          description: 'You need upload image first',
         });
       }
     } catch (error) {
       if (error.response) {
-        return notification["error"]({
-          message: "Update Failed!",
+        return notification['error']({
+          message: 'Update Failed!',
           description: error.response.data.message,
         });
       } else {
-        return notification["error"]({
-          essage: "Update Failed!",
+        return notification['error']({
+          essage: 'Update Failed!',
           description: error.message,
         });
       }
@@ -253,75 +253,69 @@ const ProfileComponent = () => {
 
   return user ? (
     <>
-      <Layout className="layout">
+      <Layout className='layout'>
         <Header>
           <HeaderComponent />
         </Header>
 
         <Content>
-          <Row className="breadCrumb">
+          <Row className='breadCrumb'>
             <Col span={23}>
-              <Breadcrumb separator=">">
+              <Breadcrumb separator='>'>
                 <Breadcrumb.Item>
-                  <Link to="/">Home</Link>
+                  <Link to='/'>Home</Link>
                 </Breadcrumb.Item>
                 <Breadcrumb.Item>User Profile</Breadcrumb.Item>
               </Breadcrumb>
             </Col>
             <Col span={1}>
               <Dropdown
-                style={{ float: "right" }}
+                style={{ float: 'right' }}
                 overlay={
-                  <Menu style={{ padding: "5px 10px" }}>
-                    <Menu.Item key="public-profile">
-                      <Link to={`/profile/public`}>
-                        <EyeOutlined /> View as Public
-                      </Link>
-                    </Menu.Item>
-                    {user.ggId || user.fbId ? (
-                      ""
-                    ) : (
-                      <Menu.Item key="change-password">
+                  user.ggId || user.fbId ? (
+                    'This is a normal menu'
+                  ) : (
+                    <Menu style={{ padding: '5px 10px' }}>
+                      <Menu.Item key='change-password'>
                         <Link to={`/change-password`}>
                           <LockOutlined /> Change Password
                         </Link>
                       </Menu.Item>
-                    )}
-                  </Menu>
-                }
-                placement="bottomCenter"
+                    </Menu>
+                  )}
+                placement='bottomCenter'
                 arrow
               >
-                <Button shape="round">
+                <Button shape='round'>
                   <MenuOutlined />
                 </Button>
               </Dropdown>
             </Col>
           </Row>
-          <Row gutter={[16, 16]} justify="center">
+          <Row gutter={[16, 16]} justify='center'>
             {/* Profile Left */}
-            <Col span={6} className="profileLeft">
-              <Row justify="center" style={{ marginTop: 16 }}>
+            <Col span={6} className='profileLeft'>
+              <Row justify='center' style={{ marginTop: 16 }}>
                 <Dropdown
                   overlay={
                     <div
                       style={{
-                        border: "1px solid whitesmoke",
-                        background: "whitesmoke",
-                        textAlign: "center",
+                        border: '1px solid whitesmoke',
+                        background: 'whitesmoke',
+                        textAlign: 'center',
                       }}
                     >
                       {user.image ? (
                         <>
                           <Button
-                            type="link"
+                            type='link'
                             icon={<EditOutlined />}
                             onClick={showModal}
                           >
                             Edit
                           </Button>
                           <Button
-                            type="link"
+                            type='link'
                             icon={<EyeOutlined />}
                             onClick={() =>
                               setStateUpload({
@@ -335,7 +329,7 @@ const ProfileComponent = () => {
                         </>
                       ) : (
                         <Button
-                          type="link"
+                          type='link'
                           icon={<UploadOutlined />}
                           onClick={showModal}
                         >
@@ -344,7 +338,7 @@ const ProfileComponent = () => {
                       )}
                     </div>
                   }
-                  placement="bottomCenter"
+                  placement='bottomCenter'
                   arrow
                 >
                   {user.image ? (
@@ -353,28 +347,28 @@ const ProfileComponent = () => {
                     <Image
                       preview={false}
                       width={200}
-                      src="https://storage.googleapis.com/elearning-305907.appspot.com/doubled/images/2df5ea7c9144bc1f5d00c85741348e18"
+                      src='https://storage.googleapis.com/elearning-305907.appspot.com/doubled/images/2df5ea7c9144bc1f5d00c85741348e18'
                     />
                   )}
                 </Dropdown>
               </Row>
-              <div style={{ textAlign: "center", marginTop: 16 }}>
+              <div style={{ textAlign: 'center', marginTop: 16 }}>
                 <h2>{user.full_name}</h2>
-                <p style={{ color: "gray" }}>{user.email}</p>
+                <p style={{ color: 'gray' }}>{user.email}</p>
                 <p>
                   {user.address ? (
                     <>
                       <span style={{ marginRight: 10 }}>{user.address}</span>
                       <a
                         href={`https://www.google.com/maps?q=${user.address}`}
-                        target="_blank"
-                        rel="noreferrer"
+                        target='_blank'
+                        rel='noreferrer'
                       >
                         <EnvironmentOutlined />
                       </a>
                     </>
                   ) : (
-                    ""
+                    ''
                   )}
                 </p>
               </div>
@@ -382,36 +376,36 @@ const ProfileComponent = () => {
             {/* End Profile Left */}
 
             {/* Profile Right */}
-            <Col span={17} className="profileRight">
-              <div className="profileDetails">
+            <Col span={17} className='profileRight'>
+              <div className='profileDetails'>
                 <tr>
-                  <td className="textHeader">Email</td>
-                  <td className="textSecondary">
+                  <td className='textHeader'>Email</td>
+                  <td className='textSecondary'>
                     {user.verified === true ? (
                       <>
                         {user.email}
-                        <Tag className="tagsVerified" color="green">
+                        <Tag className='tagsVerified' color='green'>
                           Verified
                         </Tag>
                       </>
                     ) : (
                       <>
                         {user.email}
-                        <Tag className="tagsVerified" color="red">
+                        <Tag className='tagsVerified' color='red'>
                           Not Verified
                         </Tag>
                       </>
-                    )}{" "}
+                    )}{' '}
                   </td>
                 </tr>
                 <Divider />
                 <tr>
-                  <td className="textHeader"> Full Name</td>
+                  <td className='textHeader'> Full Name</td>
                   {stt.formName === false ? (
-                    <td className="textSecondary">
+                    <td className='textSecondary'>
                       {user.full_name}
                       <Button
-                        type="link"
+                        type='link'
                         style={{ marginLeft: 30 }}
                         onClick={() => setStt({ ...stt, formName: true })}
                       >
@@ -419,33 +413,33 @@ const ProfileComponent = () => {
                       </Button>
                     </td>
                   ) : (
-                    <td className="textSecondary">
+                    <td className='textSecondary'>
                       <Form
-                        name="form edit name"
+                        name='form edit name'
                         onFinish={onFinish}
-                        layout="inline"
+                        layout='inline'
                       >
                         <Form.Item
-                          name="full_name"
+                          name='full_name'
                           style={{ width: 200 }}
                           rules={[
                             {
                               required: true,
-                              message: "Please input your username!",
+                              message: 'Please input your username!',
                             },
                           ]}
                         >
                           <Input placeholder={user.full_name} />
                         </Form.Item>
                         <Form.Item>
-                          <Button type="link" htmlType="submit">
+                          <Button type='link' htmlType='submit'>
                             <CheckOutlined />
                           </Button>
                         </Form.Item>
                         <Form.Item>
                           <Button
                             danger
-                            type="link"
+                            type='link'
                             onClick={() => setStt({ ...stt, formName: false })}
                           >
                             <CloseOutlined />
@@ -458,19 +452,19 @@ const ProfileComponent = () => {
                 <Divider />
 
                 <tr>
-                  <td className="textHeader">Date of Birth</td>
+                  <td className='textHeader'>Date of Birth</td>
 
                   {stt.formDob === false ? (
-                    <td className="textSecondary">
+                    <td className='textSecondary'>
                       {user.dob
                         ? new Date(user.dob).getFullYear() +
-                          " - " +
-                          (new Date(user.dob).getMonth() + 1) +
-                          " - " +
-                          new Date(user.dob).getDate()
-                        : "Not Set"}
+                        ' - ' +
+                        (new Date(user.dob).getMonth() + 1) +
+                        ' - ' +
+                        new Date(user.dob).getDate()
+                        : 'Not Set'}
                       <Button
-                        type="link"
+                        type='link'
                         style={{ marginLeft: 30 }}
                         onClick={() => setStt({ ...stt, formDob: true })}
                       >
@@ -478,33 +472,33 @@ const ProfileComponent = () => {
                       </Button>
                     </td>
                   ) : (
-                    <td className="textSecondary">
+                    <td className='textSecondary'>
                       <Form
-                        name="form edit name"
+                        name='form edit name'
                         onFinish={onFinish}
-                        layout="inline"
+                        layout='inline'
                       >
                         <Form.Item
-                          name="dob"
+                          name='dob'
                           style={{ width: 200 }}
                           rules={[
                             {
                               required: true,
-                              message: "Please input your date of birth!",
+                              message: 'Please input your date of birth!',
                             },
                           ]}
                         >
-                          <Input type="date" />
+                          <Input type='date' />
                         </Form.Item>
                         <Form.Item>
-                          <Button type="link" htmlType="submit">
+                          <Button type='link' htmlType='submit'>
                             <CheckOutlined />
                           </Button>
                         </Form.Item>
                         <Form.Item>
                           <Button
                             danger
-                            type="link"
+                            type='link'
                             onClick={() => setStt({ ...stt, formDob: false })}
                           >
                             <CloseOutlined />
@@ -516,12 +510,12 @@ const ProfileComponent = () => {
                 </tr>
                 <Divider />
                 <tr>
-                  <td className="textHeader">Address</td>
+                  <td className='textHeader'>Address</td>
                   {stt.formAddress === false ? (
-                    <td className="textSecondary">
-                      {user.address ? user.address : "Not Set"}
+                    <td className='textSecondary'>
+                      {user.address ? user.address : 'Not Set'}
                       <Button
-                        type="link"
+                        type='link'
                         style={{ marginLeft: 30 }}
                         onClick={() => setStt({ ...stt, formAddress: true })}
                       >
@@ -529,35 +523,35 @@ const ProfileComponent = () => {
                       </Button>
                     </td>
                   ) : (
-                    <td className="textSecondary">
+                    <td className='textSecondary'>
                       <Form
-                        name="form edit name"
+                        name='form edit name'
                         onFinish={onFinish}
-                        layout="inline"
+                        layout='inline'
                       >
                         <Form.Item
-                          name="address"
+                          name='address'
                           style={{ width: 200 }}
                           rules={[
                             {
                               required: true,
-                              message: "Please input your address!",
+                              message: 'Please input your address!',
                             },
                           ]}
                         >
                           <Input
-                            placeholder={user.address ? user.address : ""}
+                            placeholder={user.address ? user.address : ''}
                           />
                         </Form.Item>
                         <Form.Item>
-                          <Button type="link" htmlType="submit">
+                          <Button type='link' htmlType='submit'>
                             <CheckOutlined />
                           </Button>
                         </Form.Item>
                         <Form.Item>
                           <Button
                             danger
-                            type="link"
+                            type='link'
                             onClick={() =>
                               setStt({ ...stt, formAddress: false })
                             }
@@ -573,108 +567,6 @@ const ProfileComponent = () => {
             </Col>
             {/* End Profile Right */}
           </Row>
-
-          <br />
-          <Row gutter={[16, 16]} justify="center">
-            <Col span={6} className="extendLeft">
-              {user ? (
-                <div className="extendDetails">
-                  <tr>
-                    <td className="extendHeader">
-                      <GlobalOutlined /> Website
-                    </td>
-                    <td className="extendSecondary">
-                      <a
-                        href={`https://hainn229.pythonanywhere.com`}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        Peter St.
-                      </a>
-                    </td>
-                  </tr>
-                  <Divider />
-                  <tr>
-                    <td className="extendHeader">
-                      <GithubOutlined /> Github
-                    </td>
-                    <td className="extendSecondary">
-                      <a
-                        href="https://github.com/hainn229"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        hainn229
-                      </a>
-                    </td>
-                  </tr>
-                  <Divider />
-
-                  {/* <tr>
-                    <td className="extendHeader">
-                      <TwitterOutlined /> Twitter
-                    </td>
-                    <td className="extendSecondary"><a>hainn229</a></td>
-                  </tr>
-                  <Divider />
-
-                  <tr>
-                    <td className="extendHeader">
-                      <InstagramOutlined /> Instagram
-                    </td>
-                    <td className="extendSecondary"><a>hainn229</a></td>
-                  </tr>
-                  <Divider /> */}
-
-                  <tr>
-                    <td className="extendHeader">
-                      <FacebookOutlined /> Facebook
-                    </td>
-                    <td className="extendSecondary">
-                      <a
-                        href="https://www.facebook.com/hainn229"
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        hainn229
-                      </a>
-                    </td>
-                  </tr>
-                </div>
-              ) : (
-                ""
-              )}
-            </Col>
-            <Col span={17} className="extendRight">
-              <div className="profileDetails">
-                <h2>Skills</h2>
-                <p className="skillTitle">NodeJS</p>
-                <p>
-                  <Progress percent={90} showInfo={false} strokeColor="green" />
-                </p>
-
-                <p className="skillTitle">ReactJS</p>
-                <p>
-                  <Progress percent={85} showInfo={false} strokeColor="green" />
-                </p>
-
-                <p className="skillTitle">HTML/CSS</p>
-                <p>
-                  <Progress percent={70} showInfo={false} strokeColor="" />
-                </p>
-
-                <p className="skillTitle">Python</p>
-                <p>
-                  <Progress percent={70} showInfo={false} strokeColor="" />
-                </p>
-
-                <p className="skillTitle">C#</p>
-                <p>
-                  <Progress percent={50} showInfo={false} strokeColor="" />
-                </p>
-              </div>
-            </Col>
-          </Row>
         </Content>
         <Footer>
           <FooterComponent />
@@ -682,16 +574,16 @@ const ProfileComponent = () => {
       </Layout>
       <Modal
         visible={stateUpload.isVisible}
-        title="Edit Image Profile"
+        title='Edit Image Profile'
         onOk={onOK}
         onCancel={onCancel}
         footer={[
-          <Button key="cancel" onClick={onCancel}>
+          <Button key='cancel' onClick={onCancel}>
             Cancel
           </Button>,
           <Button
-            key="submit"
-            type="primary"
+            key='submit'
+            type='primary'
             loading={stateUpload.loading}
             onClick={() => {
               setStateUpload({ ...stateUpload, loading: true });
@@ -712,7 +604,7 @@ const ProfileComponent = () => {
           </Button>
         </Upload>
         <Button
-          type="primary"
+          type='primary'
           onClick={onFinishUpload}
           disabled={
             stateUpload.fileList.length === 0 || stateUpload.urlImage !== null
@@ -720,26 +612,26 @@ const ProfileComponent = () => {
           loading={stateUpload.uploading}
           style={{ marginTop: 16 }}
         >
-          {stateUpload.uploading ? "Uploading" : "Upload"}
+          {stateUpload.uploading ? 'Uploading' : 'Upload'}
         </Button>
       </Modal>
       <Modal
         visible={stateUpload.preview}
-        title={"Your Image Profile"}
+        title={'Your Image Profile'}
         footer={null}
         onCancel={() => {
           setStateUpload({ ...stateUpload, preview: false });
         }}
       >
         <img
-          alt="profile"
-          style={{ maxWidth: 500, width: "100%", height: "auto" }}
+          alt='profile'
+          style={{ maxWidth: 500, width: '100%', height: 'auto' }}
           src={user.image}
         />
       </Modal>
     </>
   ) : (
-    <Redirect to={"/"} />
+    <Redirect to={'/'} />
   );
 };
 

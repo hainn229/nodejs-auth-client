@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Redirect } from "react-router-dom";
-import { useAuth } from "../../actions/index";
-import { getOtp, verifyOtp, postForgotPassword } from "../../api/index";
-import { MailOutlined, KeyOutlined, LockOutlined } from "@ant-design/icons";
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Redirect } from 'react-router-dom';
+import { useAuth } from '../../actions/index';
+import { getOtp, verifyOtp, postForgotPassword } from '../../api/index';
+import { MailOutlined, KeyOutlined, LockOutlined } from '@ant-design/icons';
 import {
   Form,
   Input,
@@ -15,14 +15,14 @@ import {
   message,
   Divider,
   Steps,
-} from "antd";
+} from 'antd';
 const { Content } = Layout;
 const { Title, Link } = Typography;
 const { Step } = Steps;
 
 const ForgotPasswordComponent = () => {
   useEffect(() => {
-    document.title = "Reset Password | Double D";
+    document.title = 'Reset Password | Double D';
   });
   useAuth();
   const dispatch = useDispatch();
@@ -86,11 +86,11 @@ const ForgotPasswordComponent = () => {
       };
       const request = await postForgotPassword(data);
       if (request.status === 200) {
-        localStorage.setItem("token", request.data.token);
-        dispatch({ type: "FETCH_USER", payload: request.data.user });
+        localStorage.setItem('token', request.data.token);
+        dispatch({ type: 'FETCH_USER', payload: request.data.user });
         message.success(request.data.message);
         setTimeout(() => {
-          return (window.location.href = "/");
+          return (window.location.href = '/');
         }, 2000);
       }
     } catch (error) {
@@ -104,28 +104,28 @@ const ForgotPasswordComponent = () => {
 
   const steps = [
     {
-      title: "Get OTP",
+      title: 'Get OTP',
       content: (
         <>
-          <Form name="get-otp" className="login-form" onFinish={onFinishGetOTP}>
+          <Form name='get-otp' className='login-form' onFinish={onFinishGetOTP}>
             <Form.Item
-              name="email"
+              name='email'
               rules={[
                 {
-                  type: "email",
+                  type: 'email',
                   required: true,
-                  message: "Please input your email address!",
+                  message: 'Please input your email address!',
                 },
               ]}
             >
               <Input
-                prefix={<MailOutlined className="site-form-item-icon" />}
-                placeholder="Enter your email address"
+                prefix={<MailOutlined className='site-form-item-icon' />}
+                placeholder='Enter your email address'
               />
             </Form.Item>
 
             <Form.Item>
-              <Button type="primary" htmlType="submit">
+              <Button type='primary' htmlType='submit'>
                 Next
               </Button>
             </Form.Item>
@@ -134,31 +134,31 @@ const ForgotPasswordComponent = () => {
       ),
     },
     {
-      title: "OTP Verification",
+      title: 'OTP Verification',
       content: (
         <>
           <Form
-            name="otp-verification"
-            className="login-form"
+            name='otp-verification'
+            className='login-form'
             onFinish={onFinishVerifyOTP}
           >
             <Form.Item
-              name="otp"
+              name='otp'
               rules={[
                 {
                   required: true,
-                  message: "Please input OTP!",
+                  message: 'Please input OTP!',
                 },
               ]}
             >
               <Input
-                prefix={<KeyOutlined className="site-form-item-icon" />}
-                placeholder="Enter your OTP"
+                prefix={<KeyOutlined className='site-form-item-icon' />}
+                placeholder='Enter your OTP'
               />
             </Form.Item>
 
             <Form.Item>
-              <Button type="primary" htmlType="submit">
+              <Button type='primary' htmlType='submit'>
                 Next
               </Button>
             </Form.Item>
@@ -167,44 +167,44 @@ const ForgotPasswordComponent = () => {
       ),
     },
     {
-      title: "Create New Password",
+      title: 'Create New Password',
       content: (
         <>
-          <Form name="new-password" className="login-form" onFinish={onFinish}>
+          <Form name='new-password' className='login-form' onFinish={onFinish}>
             <Form.Item
-              name="password"
+              name='password'
               hasFeedback
               rules={[
                 {
                   min: 8,
                   required: true,
-                  message: "Please input your password, at least 8 characters!",
+                  message: 'Please input your password, at least 8 characters!',
                 },
               ]}
             >
               <Input.Password
-                prefix={<LockOutlined className="site-form-item-icon" />}
-                placeholder="Password"
+                prefix={<LockOutlined className='site-form-item-icon' />}
+                placeholder='Password'
               />
             </Form.Item>
 
             <Form.Item
-              name="c_password"
+              name='c_password'
               hasFeedback
-              dependencies={["password"]}
+              dependencies={['password']}
               rules={[
                 {
                   required: true,
-                  message: "Please input your confirm password!",
+                  message: 'Please input your confirm password!',
                 },
                 ({ getFieldValue }) => ({
                   validator(_, value) {
-                    if (!value || getFieldValue("password") === value) {
+                    if (!value || getFieldValue('password') === value) {
                       return Promise.resolve();
                     }
                     return Promise.reject(
                       new Error(
-                        "The two passwords that you entered do not match!"
+                        'The two passwords that you entered do not match!'
                       )
                     );
                   },
@@ -212,13 +212,13 @@ const ForgotPasswordComponent = () => {
               ]}
             >
               <Input.Password
-                prefix={<LockOutlined className="site-form-item-icon" />}
-                placeholder="Confirm Password"
+                prefix={<LockOutlined className='site-form-item-icon' />}
+                placeholder='Confirm Password'
               />
             </Form.Item>
 
             <Form.Item>
-              <Button type="primary" htmlType="submit">
+              <Button type='primary' htmlType='submit'>
                 Submit
               </Button>
             </Form.Item>
@@ -229,12 +229,12 @@ const ForgotPasswordComponent = () => {
   ];
 
   return user ? (
-    <Redirect to={"/"} />
+    <Redirect to={'/'} />
   ) : (
-    <Layout className="layout">
-      <Content style={{ paddingTop: "14%", paddingBottom: "15%" }}>
-        <Row justify="center" align="middle">
-          <Title style={{ textAlign: "center", fontSize: 60 }}>
+    <Layout className='layout'>
+      <Content style={{ paddingTop: '14%', paddingBottom: '15%' }}>
+        <Row justify='center' align='middle'>
+          <Title style={{ textAlign: 'center', fontSize: 60 }}>
             Reset Password
           </Title>
           <Steps current={current}>
@@ -243,13 +243,13 @@ const ForgotPasswordComponent = () => {
             ))}
           </Steps>
 
-          <div className="steps-content">{steps[current].content}</div>
+          <div className='steps-content'>{steps[current].content}</div>
         </Row>
 
-        <Row justify="center" align="middle">
-          <Col span={8} style={{ textAlign: "center" }}>
+        <Row justify='center' align='middle'>
+          <Col span={8} style={{ textAlign: 'center' }}>
             <Divider />
-            <Link href="/login">Back to Login!</Link>
+            <Link href='/login'>Back to Login!</Link>
           </Col>
         </Row>
       </Content>

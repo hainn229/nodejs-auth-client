@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
-import { useAuth } from "../../actions/index";
-import StripeCheckout from "react-stripe-checkout";
-import PaypalCheckout from "react-paypal-checkout";
-import { postStripe } from "../../api";
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { useAuth } from '../../actions/index';
+import StripeCheckout from 'react-stripe-checkout';
+import PaypalCheckout from 'react-paypal-checkout';
+import { postStripe } from '../../api';
 
-import { UserOutlined } from "@ant-design/icons";
+import { UserOutlined } from '@ant-design/icons';
 import {
   Button,
   Menu,
@@ -17,7 +17,7 @@ import {
   notification,
   InputNumber,
   Form,
-} from "antd";
+} from 'antd';
 const { Meta } = Card;
 
 const HeaderComponent = () => {
@@ -50,8 +50,8 @@ const HeaderComponent = () => {
         hideModal();
       }
     } catch (error) {
-      return notification["error"]({
-        message: "Transaction Failed!",
+      return notification['error']({
+        message: 'Transaction Failed!',
         description: error.response,
       });
     }
@@ -62,23 +62,23 @@ const HeaderComponent = () => {
       console.log(data);
       hideModal();
     } catch (error) {
-      return notification["error"]({
-        message: "Transaction Failed!",
+      return notification['error']({
+        message: 'Transaction Failed!',
         description: error.response,
       });
     }
   };
   const onError = async (error) => {
     hideModal();
-    return notification["error"]({
-      message: "Transaction Error!!",
+    return notification['error']({
+      message: 'Transaction Error!!',
       description: error.message,
     });
   };
   const onCancel = async () => {
     hideModal();
-    return notification["success"]({
-      message: "Transaction Canceled!",
+    return notification['success']({
+      message: 'Transaction Canceled!',
       description: `Transaction has been cancelled !`,
     });
   };
@@ -86,45 +86,38 @@ const HeaderComponent = () => {
   return (
     <>
       <span>
-        <Link to={"/"} style={{ fontSize: 20, color: "white" }}>
-          <img
-            // src="https://storage.googleapis.com/elearning-305907.appspot.com/images/teacher_man.png"
-            src="https://storage.googleapis.com/elearning-305907.appspot.com/doubled/images/dd.png"
-            width={40}
-            alt="logo"
-            style={{ marginRight: 10 }}
-          />
+        <Link to={'/'} style={{ fontSize: 20, color: 'white' }}>
           Double D
         </Link>
       </span>
       {user === null ? (
-        <span style={{ float: "right" }}>
+        <span style={{ float: 'right' }}>
           <Button style={{ width: 90 }}>
             <Link to={`/login`}>Log in</Link>
           </Button>
-          <Button type="primary" style={{ marginLeft: 10, width: 90 }}>
+          <Button type='primary' style={{ marginLeft: 10, width: 90 }}>
             <Link to={`/signup`}>Sign up</Link>
           </Button>
         </span>
       ) : (
         <>
-          <span style={{ float: "right" }}>
-            <Button type="link" style={{ marginRight: 10, color: "yellow" }}>
-              Balance: ${user.amount}
+          <span style={{ float: 'right' }}>
+            <Button type='link' style={{ marginRight: 10, color: 'yellow' }}>
+              Balance: {user.amount} VND
             </Button>
             <Dropdown
               overlay={
-                <div style={{ marginTop: 15, border: "1px solid whitesmoke" }}>
+                <div style={{ marginTop: 15, border: '1px solid whitesmoke' }}>
                   <Link to={`/profile`}>
                     <Card>
                       <Meta
                         avatar={
                           user.image ? (
-                            <Avatar src={user.image} shape="square" size={58} />
+                            <Avatar src={user.image} shape='square' size={58} />
                           ) : (
                             <Avatar
                               icon={<UserOutlined />}
-                              shape="square"
+                              shape='square'
                               size={58}
                             />
                           )
@@ -135,89 +128,89 @@ const HeaderComponent = () => {
                     </Card>
                   </Link>
                   <Menu>
-                    <Menu.Item key="wishlist">
+                    <Menu.Item key='wishlist'>
                       <Link to={`/profile/wishlist`}>Wishlist</Link>
                     </Menu.Item>
-                    <Menu.Item key="amount" onClick={showModal}>
+                    <Menu.Item key='amount' onClick={showModal}>
                       Update Amount
                     </Menu.Item>
                     <Menu.Item
-                      key="logout"
+                      key='logout'
                       onClick={() => {
-                        localStorage.removeItem("token");
-                        window.location.href = "/";
+                        localStorage.removeItem('token');
+                        window.location.href = '/';
                       }}
-                      style={{ color: "red" }}
+                      style={{ color: 'red' }}
                     >
                       Log Out
                     </Menu.Item>
                   </Menu>
                 </div>
               }
-              placement="bottomRight"
+              placement='bottomRight'
             >
               {user.image ? (
-                <Avatar src={user.image} size="large" />
+                <Avatar src={user.image} size='large' />
               ) : (
-                <Avatar size="large" icon={<UserOutlined />} />
+                <Avatar size='large' icon={<UserOutlined />} />
               )}
             </Dropdown>
           </span>
           <Modal
-            title="Update Amount"
+            title='Update Amount'
             visible={isModalVisible}
             onCancel={hideModal}
             footer={
               <>
                 <Button
-                  key="cancel"
+                  key='cancel'
                   onClick={hideModal}
                   style={{ marginRight: 10 }}
                 >
                   Cancel
                 </Button>
                 <StripeCheckout
-                  name="Double D - Update Amount"
+                  name='Double D - Update Amount'
                   description={`Pay $${totalAmount} for $${totalAmount} !`}
                   amount={totalAmount * 100}
                   email={user.email}
-                  currency="USD"
+                  currency='USD'
                   token={(token) => onSuccessStripe(token)}
                   stripeKey={process.env.REACT_APP_STRIPE_KEY}
                   // closed={onSuccessStripe}
                 >
                   <Button
-                    type="primary"
-                    htmlType="submit"
+                    type='primary'
+                    htmlType='submit'
                     style={{ marginRight: 10 }}
                   >
                     Stripe Checkout
                   </Button>
                 </StripeCheckout>
                 <PaypalCheckout
-                  env="sandbox"
+                  env='sandbox'
                   client={{
                     sandbox: process.env.REACT_APP_CLIENT_SANDBOX_KEY,
-                    production: "",
+                    production: '',
                   }}
-                  currency="USD"
+                  currency='USD'
                   total={totalAmount}
                   onSuccess={onSuccessPaypal}
                   onError={onError}
                   onCancel={onCancel}
                   style={{
-                    size: "small",
-                    shape: "rect",
+                    size: 'small',
+                    shape: 'rect',
                   }}
                 />
               </>
             }
           >
             <h6>Balance:</h6>
-            <h1>{"$ " + user.amount}</h1>
+            <h1>{user.amount + ' VND'}</h1>
 
-            <Form name="update amount" onFinish={onFinish}>
-              <Form.Item name="amount">
+            <Form name='update amount' onFinish={onFinish}>
+              <Form.Item name='amount'>
                 <InputNumber
                   style={{ width: 200 }}
                   min={1}

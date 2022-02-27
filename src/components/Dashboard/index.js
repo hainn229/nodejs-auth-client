@@ -1,27 +1,27 @@
-import React, { useEffect } from "react";
-import HeaderComponent from "../Header";
-import FooterComponent from "../Footer";
+import React, { useEffect } from 'react';
+import HeaderComponent from '../Header';
+import FooterComponent from '../Footer';
 
-import { Layout, BackTop, Carousel } from "antd";
+import { Layout, BackTop, Carousel } from 'antd';
 const { Header, Content, Footer } = Layout;
 
 const contentStyle = {
   height: 250,
-  color: "#fff",
-  textAlign: "center",
-  background: "#364d79",
-  paddingTop: "5%",
-  paddingBottom: "5%",
+  color: '#fff',
+  textAlign: 'center',
+  background: '#364d79',
+  paddingTop: '5%',
+  paddingBottom: '5%',
 };
 
 const DashboardComponent = () => {
   useEffect(() => {
-    document.title = "Double D";
+    document.title = 'Double D';
   });
   return (
     <>
       <BackTop />
-      <Layout className="layout">
+      <Layout className='layout'>
         <Header>
           <HeaderComponent />
         </Header>
@@ -40,7 +40,7 @@ const DashboardComponent = () => {
               <h3 style={contentStyle}>4</h3>
             </div>
           </Carousel>
-          <div className="site-layout-content">Content</div>
+          <div className='site-layout-content'>Content</div>
         </Content>
         <Footer>
           <FooterComponent />

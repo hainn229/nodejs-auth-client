@@ -6,7 +6,6 @@ import SignupComponent from "./components/Signup";
 import ChangePasswordComponent from "./components/Password/change";
 import ForgotPasswordComponent from "./components/Password/forgot";
 import ProfileComponent from "./components/Profile/index";
-import PublicProfileComponent from "./components/Profile/public";
 
 const App = () => {
   return (
@@ -17,7 +16,6 @@ const App = () => {
         <Route path="/signup" component={SignupComponent} />
         <Route path="/change-password" component={ChangePasswordComponent} />
         <Route path="/forgot-password" component={ForgotPasswordComponent} />
-        <Route path="/profile/public" component={PublicProfileComponent} />
         <Route path="/profile" component={ProfileComponent} />
       </Switch>
     </BrowserRouter>
